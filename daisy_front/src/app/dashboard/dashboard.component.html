@@ -1,8 +1,10 @@
 <h2>
-  Quiz list
+  My Quizzes
 </h2>
+<button (click)="newQuiz()">New Quiz</button>
 <ul>
   <li *ngFor="let quiz of quizzes">
     <a routerLink="/quiz/{{quiz.id}}">{{quiz.title}}</a>
+    <a [routerLink]="" (click)="deleteQuiz($event)" [attr.data-quizId]="quiz.id">Delete</a>
   </li>
 </ul>

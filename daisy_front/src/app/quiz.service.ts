@@ -9,20 +9,17 @@ import { Observable, of } from 'rxjs';
 })
 
 export class QuizService {
-  private apiUrl = 'http://api.daisy:8081';
 
-  constructor(
-    private http: HttpClient) {
+  getQuizzes(): Quiz[] {
+    return JSON.parse(localStorage.quizzes || '[]');
   }
 
-  getQuizzes(): Observable<Quiz[]> {
-    const url = 'quizzes';
-    return this.http.get<Quiz[]>(`${this.apiUrl}/${url}`);
+  saveQuizzes(quizzes): void {
+    localStorage.quizzes = JSON.stringify(quizzes);
   }
 
-  getQuiz(id): Observable<Quiz> {
-    const url = 'quiz';
-    return this.http.get<Quiz>(`${this.apiUrl}/${url}/${id}`);
-  }
 
+  getQuiz(id): Quiz {
+    return this.getQuizzes().find(f => f.id == id);
+  }
 }

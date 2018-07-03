@@ -1,4 +1,9 @@
 export class Quiz {
-    id: number;
+    id: string;
     title: string;
+
+    constructor(id, title) {
+        this.id = id;
+        this.title = title;
+    }
 }
