@@ -1,13 +1,25 @@
+var sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database('./db/daisy.db', (err) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    console.log('Connected to the daisy database.');
+  });
+
 module.exports = {
-    listQuizzes: function() {
-        return [
-            { id: 1, title: 'Test Quiz 1' },
-            { id: 2, title: 'Test Quiz 2' },
-            { id: 3, title: 'Test Quiz 3' },
-        ];
+    listQuizzes: function(callback) {
+        let q = `SELECT id, title
+            FROM quiz
+            ORDER BY id`;
+
+        db.all(q, [], callback)
     },
 
-    getQuiz: function(id) {
-        return this.listQuizzes().find(f => f.id == id);
+    getQuiz: function(id, callback) {
+        let q = `SELECT id, title
+            FROM quiz
+            WHERE id = ?`;
+
+        db.get(q, [id], callback);
     }
 };

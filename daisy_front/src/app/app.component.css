@@ -1,5 +1,4 @@
-h1 {
-    color: #369;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 250%;
-  }
+.container-fluid {
+  background-image: url('/assets/images/bg.jpg');
+  background-size: cover; 
+}

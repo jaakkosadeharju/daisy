@@ -12,14 +12,15 @@ export class DashboardComponent implements OnInit {
   quizzes: Quiz[];
 
   constructor(private quizService: QuizService) {
-    this.loadQuizzes();
   }
 
   ngOnInit() {
+    this.loadQuizzes();
+    console.log("dashboard init")
   }
 
   loadQuizzes(): void {
-    this.quizzes = this.quizService.getQuizzes();
+    this.quizService.getQuizzes().subscribe(quizzes => this.quizzes = quizzes);
   }
 
 }
