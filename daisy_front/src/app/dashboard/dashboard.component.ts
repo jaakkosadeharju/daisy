@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Quiz } from '../quiz';
+import { Question } from "../question";
 import { QuizService } from '../quiz.service';
 
 @Component({
@@ -21,7 +22,9 @@ export class DashboardComponent implements OnInit {
   newQuiz(): void {
     this.quizzes.push({
       id: this.quizzes.length.toString(),
-      title: "Quiz " + (this.quizzes.length+1)});
+      title: "Quiz " + (this.quizzes.length+1),
+      questions: []}
+    );
     this.quizService.saveQuizzes(this.quizzes);
   }
 

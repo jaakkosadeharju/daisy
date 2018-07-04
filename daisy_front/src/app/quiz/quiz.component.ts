@@ -23,4 +23,11 @@ export class QuizComponent implements OnInit {
     this.quiz = this.quizService.getQuiz(id);
   }
 
+  addQuestion() {
+    this.quiz.questions.push({questionText: "New Question", options: []})
+  }
+
+  deleteQuestion(e) {
+    console.log('on deleteQuestion', e.target);
+  }
 }
