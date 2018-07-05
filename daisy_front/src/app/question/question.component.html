@@ -1,5 +1,15 @@
-<h3>{{question.questionText}}</h3>
-<p>
-  question works!
-</p>
-<a [routerLink]="" (click)="onDelete($event)">Delete question</a>
+<h3>
+  <app-in-place-editor value="{{question.questionText}}" (update)="updateQuestionText($event)"></app-in-place-editor>
+</h3>
+<ul>
+  <li *ngFor="let questionOption of question.options">
+    <app-in-place-editor
+      value="{{questionOption.text}}"
+      (update)="updateQuestionOptionText($event)"
+      [attr.data-optionId]="questionOption.id">
+    </app-in-place-editor>
+    <a [routerLink]="" (click)="deleteOption($event)" [attr.data-optionId]="questionOption.id">Delete option</a>
+  </li>
+</ul>
+<a [routerLink]="" (click)="addQuestionOption($event)">New option</a>
+<a [routerLink]="" (click)="deleteQuestion($event)">Delete question</a>

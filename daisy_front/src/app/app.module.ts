@@ -7,13 +7,15 @@ import { QuizComponent } from './quiz/quiz.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { QuestionComponent } from './question/question.component';
+import { InPlaceEditorComponent } from './in-place-editor/in-place-editor.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     QuizComponent,
     DashboardComponent,
-    QuestionComponent
+    QuestionComponent,
+    InPlaceEditorComponent
   ],
   imports: [
     BrowserModule,

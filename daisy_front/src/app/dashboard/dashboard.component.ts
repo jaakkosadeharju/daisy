@@ -21,19 +21,23 @@ export class DashboardComponent implements OnInit {
 
   newQuiz(): void {
     this.quizzes.push({
-      id: this.quizzes.length.toString(),
+      id: this.quizService.randomString(),
       title: "Quiz " + (this.quizzes.length+1),
       questions: []}
     );
-    this.quizService.saveQuizzes(this.quizzes);
+    this.saveQuizzes();
   }
 
   deleteQuiz(event): void {
     if (confirm("Delete the quiz?")) {
       let quiz = this.quizzes.find(q => q.id == event.target.dataset.quizid);
       this.quizzes.splice(this.quizzes.indexOf(quiz), 1);
-      this.quizService.saveQuizzes(this.quizzes);
+      this.saveQuizzes();
     }
+  }
+
+  saveQuizzes(): void {
+    this.quizService.saveQuizzes(this.quizzes);
   }
 
   loadQuizzes(): void {
