@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InPlaceEditorComponent } from './in-place-editor.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('InPlaceEditorComponent', () => {
   let component: InPlaceEditorComponent;
@@ -8,6 +9,7 @@ describe('InPlaceEditorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
       declarations: [ InPlaceEditorComponent ]
     })
     .compileComponents();

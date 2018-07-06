@@ -1,12 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { QuizComponent } from './quiz/quiz.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { QuestionComponent } from './question/question.component';
 import { InPlaceEditorComponent } from './in-place-editor/in-place-editor.component';
 
 @NgModule({
@@ -14,15 +13,15 @@ import { InPlaceEditorComponent } from './in-place-editor/in-place-editor.compon
     AppComponent,
     QuizComponent,
     DashboardComponent,
-    QuestionComponent,
     InPlaceEditorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [InPlaceEditorComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

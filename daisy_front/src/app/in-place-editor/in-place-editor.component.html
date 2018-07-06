@@ -1,1 +1,1 @@
-<input [value]="value" (change)="saveValue($event)" />
+<input [(ngModel)]="value" class="form-control" (change)="saveValue($event)" required />

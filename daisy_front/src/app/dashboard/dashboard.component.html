@@ -5,6 +5,6 @@
 <ul>
   <li *ngFor="let quiz of quizzes">
     <a routerLink="/quiz/{{quiz.id}}">{{quiz.title}}</a>
-    <a [routerLink]="" (click)="deleteQuiz($event)" [attr.data-quizId]="quiz.id">Delete</a>
+    <a (click)="deleteQuiz($event)" [attr.data-quizId]="quiz.id">Delete</a>
   </li>
 </ul>

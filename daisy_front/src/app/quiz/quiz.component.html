@@ -1,8 +1,28 @@
-<h1 *ngIf="quiz">
-  <app-in-place-editor value="{{quiz.title}}" (update)="updateTitle($event)"></app-in-place-editor>
-</h1>
-<app-question *ngFor="let question of quiz.questions" class="quiz-question"
-  [question]="question"
-  (questionUpdated)="questionChanged($event)"
-  (questionDeleted)="deleteQuestion($event)"></app-question>
-<a [routerLink]="" (click)="addQuestion($event)">Add Question</a>
+<form>
+  <h1 *ngIf="quiz">
+    <input type="text" [(ngModel)]="quiz.title" name="title" class="form-control" />
+  </h1>
+  <!-- <app-question *ngFor="let question of quiz.questions" class="quiz-question"
+    [question]="question"
+    (questionUpdated)="questionChanged($event)"
+    (questionDeleted)="deleteQuestion($event)"></app-question> -->
+
+    <div *ngFor="let question of quiz.questions" class="quiz-question">
+      <h3>
+        <input type="text" [(ngModel)]="question.questionText" name="questions[{{question.id}}][questionText]" class="form-control" />
+      </h3>
+      <div *ngFor="let opt of question.options">
+        <input type="hidden" [(ngModel)]="opt.id" name="questions[{{question.id}}][options][{{opt.id}}][id]" />
+        <input type="text" [(ngModel)]="opt.value" name="questions[{{question.id}}][options][{{opt.id}}][value]" class="form-control" />
+        <input type="text" [(ngModel)]="opt.text" name="questions[{{question.id}}][options][{{opt.id}}][text]" class="form-control" />
+        <a [routerLink]="" (click)="deleteOption($event)"
+          [attr.data-questionId]="question.id"
+          [attr.data-optionId]="opt.id">Delete option</a>
+      </div>
+      <a [routerLink]="" (click)="addQuestionOption($event)" [attr.data-questionId]="question.id">New option</a>
+      <a [routerLink]="" (click)="deleteQuestion($event)" [attr.data-questionId]="question.id">Delete question</a>
+    </div>
+
+  <a [routerLink]="" (click)="addQuestion($event)">Add Question</a>
+  <button type="submit" (click)="saveQuiz($event)">Save</button>
+</form>

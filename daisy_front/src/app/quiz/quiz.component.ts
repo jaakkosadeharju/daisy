@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Quiz } from '../quiz';
 import { Question } from "../question";
@@ -15,6 +15,7 @@ export class QuizComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private quizService: QuizService,
     private location: Location
   ) {}
@@ -26,7 +27,6 @@ export class QuizComponent implements OnInit {
 
   updateTitle(event): void {
     this.quiz.title = event.target.value;
-    this.quizService.updateQuiz(this.quiz);
   }
 
   addQuestion() {
@@ -37,16 +37,48 @@ export class QuizComponent implements OnInit {
     };
 
     this.quiz.questions.push(newQuestion);
-    this.quizService.updateQuiz(this.quiz);
+  }
+
+  deleteOption(e) {
+    let question = this.quiz.questions.find(f => f.id === e.target.dataset.questionid);
+    let optionIndex = question.options.indexOf(
+      question.options.find(f => f.id === e.target.dataset.optionid));
+    question.options.splice(optionIndex, 1);
+  }
+
+  addQuestionOption(e) {
+    let question = this.quiz.questions.find(f => f.id === e.target.dataset.questionid);
+
+    question.options.push({
+      id: this.quizService.randomString(),
+      text: "Option " + question.options.length,
+      value: this.quizService.randomString()
+    });
   }
 
   questionChanged(question): void {
     let questionIndex = this.quiz.questions.indexOf(this.quiz.questions.find(f => f.id === question.id));
     this.quiz.questions.splice(questionIndex, 1, question);
-    this.quizService.updateQuiz(this.quiz);
   }
 
   deleteQuestion(question) {
     this.quiz.questions.splice(this.quiz.questions.indexOf(question), 1);
+  }
+
+
+  updateQuestionText(e): void {
+    let question = this.quiz.questions.find(f => f.id === e.target.dataset.questionid);
+    question.questionText = e.target.value;
+  }
+
+  updateQuestionOptionText(e): void {
+    let question = this.quiz.questions.find(f => f.id === e.target.dataset.questionid);
+    let opt = question.options.find(f => f.id === e.target.parentElement.dataset.optionid);
+    opt.text = e.target.value;
+  }
+
+  saveQuiz(e): void {
+    this.quizService.updateQuiz(this.quiz);
+    this.router.navigate(['/dashboard']);
   }
 }
