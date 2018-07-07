@@ -18,7 +18,7 @@ export class QuizComponent implements OnInit {
     private router: Router,
     private quizService: QuizService,
     private location: Location
-  ) {}
+  ) { }
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -39,20 +39,18 @@ export class QuizComponent implements OnInit {
     this.quiz.questions.push(newQuestion);
   }
 
-  deleteOption(e) {
-    let question = this.quiz.questions.find(f => f.id === e.target.dataset.questionid);
-    let optionIndex = question.options.indexOf(
-      question.options.find(f => f.id === e.target.dataset.optionid));
-    question.options.splice(optionIndex, 1);
+  deleteOption(e, question, option): void {
+    if (confirm("Do you really want to delete the option?")) {
+      let optionIndex = question.options.indexOf(
+        question.options.find(f => f.id === option.id));
+      question.options.splice(optionIndex, 1);
+    }
   }
 
-  addQuestionOption(e) {
-    let question = this.quiz.questions.find(f => f.id === e.target.dataset.questionid);
-
+  addQuestionOption(e, question) {
     question.options.push({
       id: this.quizService.randomString(),
-      text: "Option " + question.options.length,
-      value: this.quizService.randomString()
+      text: "Option " + question.options.length
     });
   }
 
@@ -61,8 +59,10 @@ export class QuizComponent implements OnInit {
     this.quiz.questions.splice(questionIndex, 1, question);
   }
 
-  deleteQuestion(question) {
-    this.quiz.questions.splice(this.quiz.questions.indexOf(question), 1);
+  deleteQuestion(e, question) {
+    if (confirm("Do you really want to delete the question?")) {
+      this.quiz.questions.splice(this.quiz.questions.indexOf(question), 1);
+    }
   }
 
 

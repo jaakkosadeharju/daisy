@@ -1,0 +1,17 @@
+.quiz-question {
+    margin: 0.5rem 0;
+    border: 1pt solid #eee;
+    box-shadow: 2pt 2pt 5pt rgba(0, 0, 0, 0.18);
+}
+
+.question-options {
+    margin-top: 1rem;
+}
+
+.question-actions {
+    margin: 0.5rem 0;
+}
+
+.question-actions .btn {
+    margin-right: 0.5rem;
+}

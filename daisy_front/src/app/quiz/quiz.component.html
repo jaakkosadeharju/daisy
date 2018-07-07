@@ -1,28 +1,46 @@
 <form>
-  <h1 *ngIf="quiz">
-    <input type="text" [(ngModel)]="quiz.title" name="title" class="form-control" />
-  </h1>
-  <!-- <app-question *ngFor="let question of quiz.questions" class="quiz-question"
-    [question]="question"
-    (questionUpdated)="questionChanged($event)"
-    (questionDeleted)="deleteQuestion($event)"></app-question> -->
+  <h1>Edit Quiz</h1>
+  <div *ngIf="quiz">
+    <label for="quiz-id">Quiz title</label>
+    <input type="text" id="quiz-id" [(ngModel)]="quiz.title" name="title" class="form-control" required />
 
-    <div *ngFor="let question of quiz.questions" class="quiz-question">
-      <h3>
-        <input type="text" [(ngModel)]="question.questionText" name="questions[{{question.id}}][questionText]" class="form-control" />
-      </h3>
-      <div *ngFor="let opt of question.options">
-        <input type="hidden" [(ngModel)]="opt.id" name="questions[{{question.id}}][options][{{opt.id}}][id]" />
-        <input type="text" [(ngModel)]="opt.value" name="questions[{{question.id}}][options][{{opt.id}}][value]" class="form-control" />
-        <input type="text" [(ngModel)]="opt.text" name="questions[{{question.id}}][options][{{opt.id}}][text]" class="form-control" />
-        <a [routerLink]="" (click)="deleteOption($event)"
-          [attr.data-questionId]="question.id"
-          [attr.data-optionId]="opt.id">Delete option</a>
+    <div *ngFor="let question of quiz.questions" class="quiz-question row inverse-colors">
+      <div class="col-12 pt-2">
+        <label for="question-text-{{question.id}}">Question</label>
+        <input type="text" id="question-text-{{question.id}}" [(ngModel)]="question.questionText" name="questions[{{question.id}}][questionText]"
+          class="form-control" required />
+        <div class="question-options">
+          <label>Options</label>
+          <div *ngFor="let opt of question.options" class="row">
+            <div class="col-12">
+              <input type="hidden" [(ngModel)]="opt.id" name="questions[{{question.id}}][options][{{opt.id}}][id]" />
+              <div class="input-group mb-1">
+                <input type="text" id="opt-{{opt.id}}" [(ngModel)]="opt.text" name="questions[{{question.id}}][options][{{opt.id}}][text]"
+                  class="form-control" required />
+                <div class="input-group-append">
+                  <a [routerLink]="" class="btn btn-danger pull-right" (click)="deleteOption($event, question, opt)">
+                    <i class="fa fa-trash"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-1">
+          <div class="offset-10 col-2">
+            <a [routerLink]="" class="btn btn-primary pull-right" (click)="addQuestionOption($event, question)">
+              <i class="fa fa-plus"></i>
+            </a>
+          </div>
+        </div>
+        <div class="mt-2 mb-2">
+          <a [routerLink]="" class="btn btn-danger" (click)="deleteQuestion($event, question)">Delete question</a>
+        </div>
       </div>
-      <a [routerLink]="" (click)="addQuestionOption($event)" [attr.data-questionId]="question.id">New option</a>
-      <a [routerLink]="" (click)="deleteQuestion($event)" [attr.data-questionId]="question.id">Delete question</a>
     </div>
 
-  <a [routerLink]="" (click)="addQuestion($event)">Add Question</a>
-  <button type="submit" (click)="saveQuiz($event)">Save</button>
+    <a [routerLink]="" class="btn btn-primary" (click)="addQuestion($event)">Add question</a>
+    <button type="submit" (click)="saveQuiz($event)" class="btn btn-success pull-right">Save</button>
+    <a routerLink="/dashboard" class="btn btn-secondary pull-right mr-1">Cancel</a>
+  </div>
 </form>

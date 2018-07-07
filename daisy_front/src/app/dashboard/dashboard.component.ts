@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
     this.saveQuizzes();
   }
 
-  deleteQuiz(event): void {
+  deleteQuiz(event, quiz): void {
     if (confirm("Delete the quiz?")) {
       let quiz = this.quizzes.find(q => q.id == event.target.dataset.quizid);
       this.quizzes.splice(this.quizzes.indexOf(quiz), 1);

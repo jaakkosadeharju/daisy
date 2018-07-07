@@ -1,10 +1,21 @@
 <h2>
   My Quizzes
 </h2>
-<button (click)="newQuiz()">New Quiz</button>
-<ul>
-  <li *ngFor="let quiz of quizzes">
-    <a routerLink="/quiz/{{quiz.id}}">{{quiz.title}}</a>
-    <a (click)="deleteQuiz($event)" [attr.data-quizId]="quiz.id">Delete</a>
-  </li>
-</ul>
+<div class="quiz-list mb-2">
+  <div *ngFor="let quiz of quizzes" class="row quiz inverse-colors">
+    <div class="col-10">
+      <b>{{quiz.title}}</b>
+    </div>
+    <div class="col-2">
+      <span class="btn-group">
+        <a routerLink="/quiz/{{quiz.id}}" class="btn btn-primary btn-sm">
+          <i class="fa fa-pencil"></i>
+        </a>
+        <a [routerLink]="" class="btn btn-danger btn-sm" (click)="deleteQuiz($event, quiz)">
+          <i class="fa fa-trash"></i>
+        </a>
+      </span>
+    </div>
+  </div>
+</div>
+<button (click)="newQuiz()" class="btn btn-primary pull-right">New Quiz</button>
