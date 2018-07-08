@@ -3,10 +3,14 @@
 </h2>
 <div class="quiz-list mb-2">
   <div *ngFor="let quiz of quizzes" class="row quiz inverse-colors">
-    <div class="col-10">
+    <div class="col-12 col-sm-8">
       <b>{{quiz.title}}</b>
     </div>
-    <div class="col-2">
+    <div class="col-12 col-sm-4">
+      <a routerLink="/quiz/presentation/{{quiz.id}}" class="btn btn-primary btn-sm mr-2">
+        <i class="fa fa-play"></i>
+        Start presentation
+      </a>
       <span class="btn-group">
         <a routerLink="/quiz/{{quiz.id}}" class="btn btn-primary btn-sm">
           <i class="fa fa-pencil"></i>

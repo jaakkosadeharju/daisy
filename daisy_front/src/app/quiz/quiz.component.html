@@ -7,8 +7,8 @@
     <div *ngFor="let question of quiz.questions" class="quiz-question row inverse-colors">
       <div class="col-12 pt-2">
         <label for="question-text-{{question.id}}">Question</label>
-        <input type="text" id="question-text-{{question.id}}" [(ngModel)]="question.questionText" name="questions[{{question.id}}][questionText]"
-          class="form-control" required />
+        <textarea id="question-text-{{question.id}}" [(ngModel)]="question.questionText" name="questions[{{question.id}}][questionText]"
+          class="form-control" required></textarea>
         <div class="question-options">
           <label>Options</label>
           <div *ngFor="let opt of question.options" class="row">
