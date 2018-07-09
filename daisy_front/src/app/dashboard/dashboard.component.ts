@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Quiz } from '../quiz';
-import { Question } from "../question";
 import { QuizService } from '../quiz.service';
+import { QuizSession } from '../quiz_session';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +13,9 @@ export class DashboardComponent implements OnInit {
 
   quizzes: Quiz[];
 
-  constructor(private quizService: QuizService) {
+  constructor(
+    private router: Router,
+    private quizService: QuizService) {
   }
 
   ngOnInit() {
@@ -22,8 +25,9 @@ export class DashboardComponent implements OnInit {
   newQuiz(): void {
     this.quizzes.push({
       id: this.quizService.randomString(),
-      title: "Quiz " + (this.quizzes.length+1),
-      questions: []}
+      title: "Quiz " + (this.quizzes.length + 1),
+      questions: []
+    }
     );
     this.saveQuizzes();
   }
@@ -42,6 +46,12 @@ export class DashboardComponent implements OnInit {
 
   loadQuizzes(): void {
     this.quizzes = this.quizService.getQuizzes();
+  }
+
+
+  startNewSession(e, quiz: Quiz): void {
+    let s: QuizSession = this.quizService.createQuizSession(quiz);
+    this.router.navigate(['quiz/' + quiz.id + '/session/' + s.id]);
   }
 
 }

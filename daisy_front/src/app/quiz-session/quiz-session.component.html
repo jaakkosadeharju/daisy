@@ -1,0 +1,41 @@
+<h1>{{quiz.title}}</h1>
+
+
+<div *ngIf="quizSession && !quizSession.activeQuestion" class="quiz-session-start inverse-colors p-3">
+  <div class="row">
+    <div class="col-12">
+      <span>Link to join will be here (+QR-code?)</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <a routerLink="/quiz/{{quiz.id}}/session/{{quizSession.id}}" (click)="nextQuestion()" class="btn btn-success btn-lg">Start</a>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="quizSession.activeQuestion" class="quiz-session-question inverse-colors p-3">
+  <div class="row">
+    <div class="col-12">
+      <h3>{{quizSession.activeQuestion.questionText}}</h3>
+    </div>
+  </div>
+  <ol class="row">
+    <li *ngFor="let option of quizSession.activeQuestion.options" class="col-12">
+      {{option.text}}
+    </li>
+  </ol>
+
+  <div  *ngIf="!this.isLastQuestion()" class="row">
+    <div class="col-12">
+      <a routerLink="/quiz/{{quiz.id}}/session/{{quizSession.id}}" (click)="nextQuestion()" class="btn btn-success btn-sm pull-right">Next Question</a>
+    </div>
+  </div>
+
+  <div  *ngIf="this.isLastQuestion()" class="row">
+    <div class="col-12">
+      <a routerLink="/quiz/{{quiz.id}}/session/{{quizSession.id}}" class="btn btn-success btn-sm pull-right">Show results</a>
+    </div>
+  </div>
+</div>

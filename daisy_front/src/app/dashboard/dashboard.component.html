@@ -7,9 +7,9 @@
       <b>{{quiz.title}}</b>
     </div>
     <div class="col-12 col-sm-4">
-      <a routerLink="/quiz/{{quiz.id}}/presentation" class="btn btn-primary btn-sm mr-2">
+      <a routerLink="" (click)="startNewSession($event, quiz)" class="btn btn-primary btn-sm mr-2">
         <i class="fa fa-play"></i>
-        Start presentation
+        Start
       </a>
       <span class="btn-group">
         <a routerLink="/quiz/{{quiz.id}}" class="btn btn-primary btn-sm">

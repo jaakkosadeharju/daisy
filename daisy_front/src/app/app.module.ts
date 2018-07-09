@@ -7,7 +7,7 @@ import { QuizComponent } from './quiz/quiz.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { InPlaceEditorComponent } from './in-place-editor/in-place-editor.component';
-import { QuizPresentationComponent } from './quiz-presentation/quiz-presentation.component';
+import { QuizSessionComponent } from './quiz-session/quiz-session.component';
 
 
 @NgModule({
@@ -16,7 +16,7 @@ import { QuizPresentationComponent } from './quiz-presentation/quiz-presentation
     QuizComponent,
     DashboardComponent,
     InPlaceEditorComponent,
-    QuizPresentationComponent
+    QuizSessionComponent
   ],
   imports: [
     BrowserModule,
