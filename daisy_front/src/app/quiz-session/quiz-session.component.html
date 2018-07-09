@@ -4,7 +4,11 @@
 <div *ngIf="quizSession && !quizSession.activeQuestion" class="quiz-session-start inverse-colors p-3">
   <div class="row">
     <div class="col-12">
-      <span>Link to join will be here (+QR-code?)</span>
+      Join in by opening 
+      {{joinUrl()}}
+    </div>
+    <div class="col-12">
+      <span>(+QR-code?)</span>
     </div>
   </div>
 
@@ -27,13 +31,13 @@
     </li>
   </ol>
 
-  <div  *ngIf="!this.isLastQuestion()" class="row">
+  <div *ngIf="!this.isLastQuestion()" class="row">
     <div class="col-12">
       <a routerLink="/quiz/{{quiz.id}}/session/{{quizSession.id}}" (click)="nextQuestion()" class="btn btn-success btn-sm pull-right">Next Question</a>
     </div>
   </div>
 
-  <div  *ngIf="this.isLastQuestion()" class="row">
+  <div *ngIf="this.isLastQuestion()" class="row">
     <div class="col-12">
       <a routerLink="/quiz/{{quiz.id}}/session/{{quizSession.id}}" class="btn btn-success btn-sm pull-right">Show results</a>
     </div>

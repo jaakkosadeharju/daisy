@@ -28,7 +28,7 @@ export class QuizSessionComponent implements OnInit {
 
   nextQuestionId(): string {
     if (this.quiz.questions.length === 0) throw "The quiz contains no questions.";
-    
+
     if (this.isLastQuestion()) {
       return null;
     }
@@ -48,5 +48,12 @@ export class QuizSessionComponent implements OnInit {
 
   isLastQuestion(): boolean {
     return this.quizSession.activeQuestion && this.quiz.questions[this.quiz.questions.length - 1].id === this.quizSession.activeQuestion.id;
+  }
+
+  joinUrl(): string {
+    return window.location.protocol + '//' +
+      window.location.hostname +
+      (['80', '443'].indexOf(window.location.port) < 0 ? ':' + window.location.port : '') +
+      '/join/' + this.quizSession.id;
   }
 }
