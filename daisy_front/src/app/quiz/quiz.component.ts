@@ -49,6 +49,7 @@ export class QuizComponent implements OnInit {
   addQuestionOption(e, question) {
     question.options.push({
       id: this.quizService.randomString(),
+      correct: true,
       text: "Option " + question.options.length
     });
   }
@@ -79,5 +80,9 @@ export class QuizComponent implements OnInit {
   saveQuiz(e): void {
     this.quizService.updateQuiz(this.quiz);
     this.router.navigate(['/dashboard']);
+  }
+
+  toggleCorrect(e, option): void {
+    option.correct = !option.correct;
   }
 }

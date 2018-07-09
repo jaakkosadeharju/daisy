@@ -17,10 +17,17 @@
               <div class="input-group mb-1">
                 <input type="text" id="opt-{{opt.id}}" [(ngModel)]="opt.text" name="questions[{{question.id}}][options][{{opt.id}}][text]"
                   class="form-control" required />
+                <!-- <input type="checkbox" class="form-control" name="questions[{{question.id}}][options][{{opt.id}}][correct]" value="true" /> -->
                 <div class="input-group-append">
-                  <a [routerLink]="" class="btn btn-danger pull-right" (click)="deleteOption($event, question, opt)">
-                    <i class="fa fa-trash"></i>
-                  </a>
+                    <a *ngIf="opt.correct" [routerLink]="" class="btn btn-success pull-right" (click)="toggleCorrect($event, opt)">
+                      <i class="fa fa-check"></i>
+                    </a>
+                    <a *ngIf="!opt.correct" [routerLink]="" class="btn btn-danger pull-right" (click)="toggleCorrect($event, opt)">
+                      <i class="fa fa-times"></i>
+                    </a>
+                    <a [routerLink]="" class="btn btn-secondary pull-right" (click)="deleteOption($event, question, opt)">
+                      <i class="fa fa-trash"></i>
+                    </a>
                 </div>
               </div>
             </div>
