@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { QuizService } from '../quiz.service';
+import { Question } from '../question';
 
 @Component({
   selector: 'app-quiz-answer',
@@ -8,6 +9,8 @@ import { QuizService } from '../quiz.service';
   styleUrls: ['./quiz-answer.component.scss']
 })
 export class QuizAnswerComponent implements OnInit {
+  connection;
+  question: Question;
 
   constructor(
     private route: ActivatedRoute,
@@ -15,6 +18,9 @@ export class QuizAnswerComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.connection = this.quizService.getQuestionChange().subscribe(message => {
+      console.log("change question")
+    })
   }
 
 }

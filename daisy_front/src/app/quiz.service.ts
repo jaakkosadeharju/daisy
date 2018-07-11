@@ -1,14 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Subject } from 'rxjs';
+import { Observable } from 'rxjs';
+import * as io from 'socket.io-client';
 import { Quiz } from './quiz';
 import { QuizSession } from './quiz_session';
+import { Question } from './question';
+
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class QuizService {
+  private apiUrl: string = "http://localhost:8081/";
+  private socket;
 
   getQuizzes(): Quiz[] {
     return JSON.parse(localStorage.quizzes || '[]');
@@ -69,4 +74,50 @@ export class QuizService {
     }
   }
 
+
+  emitQuestionChange(question: Question): void {
+    this.socket.emit('change-question', question);
+  }
+
+  getUserConnection(): Observable<{}> {
+    let observable = new Observable(observer => {
+      this.socket = io(this.apiUrl);
+      this.socket.on('user-joined', data => {
+        observer.next(data);
+      });
+      return () => {
+        this.socket.disconnect();
+      }
+    });
+
+    return observable;
+  }
+
+  getUserDisconnect(): Observable<{}> {
+    let observable = new Observable(observer => {
+      this.socket = io(this.apiUrl);
+      this.socket.on('user-disconnected', data => {
+        observer.next(data);
+      });
+      return () => {
+        this.socket.disconnect();
+      }
+    });
+
+    return observable;
+  }
+
+  getQuestionChange(): Observable<{}> {
+    let observable = new Observable(observer => {
+      this.socket = io(this.apiUrl);
+      this.socket.on('change-question', data => {
+        observer.next(data);
+      });
+      return () => {
+        this.socket.disconnect();
+      }
+    });
+
+    return observable;
+  }
 }

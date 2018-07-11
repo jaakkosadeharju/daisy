@@ -1,10 +1,9 @@
-var express = require('express');
+let express = require('express');
+let app = express();
+let server = require('http').createServer(app);
+let io = require('socket.io')(server);
 
-var app = express();
-
-
-var QuizService = require('./services/quiz_service');
-
+let QuizService = require('./services/quiz_service');
 
 app.all('/*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -24,9 +23,27 @@ app.get('/quiz/:id', function (req, res) {
   });
 });
 
-var server = app.listen(8081, function () {
-   var host = server.address().address
-   var port = server.address().port
+
+io.on('connection', socket => {
+  console.log('User connected.');
+  io.emit('user-joined');
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected');
+    io.emit('user-disconnected');
+  });
+
+
+  socket.on('change-question', (questionId) => {
+    io.emit('change-question', {questionId: questionId});
+  });
+
+});
+
+
+server.listen(8081, () => {
+   let host = server.address().address
+   let port = server.address().port
    
-   console.log("Example app listening at http://%s:%s", host, port)
+   console.log("Daisy app listening at http://%s:%s", host, port)
 })

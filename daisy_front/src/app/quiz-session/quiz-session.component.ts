@@ -10,9 +10,11 @@ import { QuizSession } from '../quiz_session';
   styleUrls: ['./quiz-session.component.scss']
 })
 export class QuizSessionComponent implements OnInit {
-
+  userConnectedConnection;
+  userDisconnectedConnection;
   quizSession: QuizSession;
   quiz: Quiz;
+  userCount: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,6 +26,15 @@ export class QuizSessionComponent implements OnInit {
 
     this.quiz = this.quizService.getQuiz(quizId);
     this.quizSession = this.quizService.getQuizSession(quizSessionId);
+
+    this.userConnectedConnection = this.quizService.getUserConnection().subscribe(message => {
+      this.userCount++;
+    })
+
+    this.userDisconnectedConnection = this.quizService.getUserDisconnect().subscribe(message => {
+      this.userCount--;
+    })
+
   }
 
   nextQuestionId(): string {
@@ -44,6 +55,7 @@ export class QuizSessionComponent implements OnInit {
   nextQuestion() {
     this.quizSession.activeQuestion = this.quiz.questions.find(f => f.id === this.nextQuestionId());
     this.quizService.saveQuizSession(this.quizSession);
+    this.quizService.emitQuestionChange(this.quizSession.activeQuestion);
   }
 
   isLastQuestion(): boolean {
