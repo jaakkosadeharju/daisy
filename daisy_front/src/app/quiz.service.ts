@@ -75,14 +75,27 @@ export class QuizService {
   }
 
 
-  emitQuestionChange(question: Question): void {
-    this.socket.emit('change-question', question);
+  emitQuestionChange(session: QuizSession, question: Question): void {
+    this.socket.emit('change-question', session.id, question);
   }
 
-  getUserConnection(): Observable<{}> {
+  emitJoinQuiz(quizSessionId): void {
+    this.socket.emit('join-quiz', quizSessionId);
+  }
+
+  emitRegisterQuiz(quizSessionId, quizId): void {
+    this.socket.emit('register-quiz', quizSessionId, quizId);
+  }
+
+  emitAnswerQuestion(optionId): void {
+    this.socket.emit('answer-question', optionId);
+  }
+
+  getUserJoin(): Observable<{}> {
     let observable = new Observable(observer => {
-      this.socket = io(this.apiUrl);
+      this.socket = this.socket || io(this.apiUrl);
       this.socket.on('user-joined', data => {
+        console.log('user-joined', data);
         observer.next(data);
       });
       return () => {
@@ -95,7 +108,7 @@ export class QuizService {
 
   getUserDisconnect(): Observable<{}> {
     let observable = new Observable(observer => {
-      this.socket = io(this.apiUrl);
+      this.socket = this.socket || io(this.apiUrl);
       this.socket.on('user-disconnected', data => {
         observer.next(data);
       });
@@ -109,7 +122,7 @@ export class QuizService {
 
   getQuestionChange(): Observable<{}> {
     let observable = new Observable(observer => {
-      this.socket = io(this.apiUrl);
+      this.socket = this.socket || io(this.apiUrl);
       this.socket.on('change-question', data => {
         observer.next(data);
       });
@@ -119,5 +132,24 @@ export class QuizService {
     });
 
     return observable;
+  }
+
+  getAnswerQuestion(): Observable<{}> {
+    let observable = new Observable(observer => {
+      this.socket = this.socket || io(this.apiUrl);
+      this.socket.on('answer-question', data => {
+        observer.next(data);
+      });
+      return () => {
+        this.socket.disconnect();
+      }
+    });
+
+    return observable;
+  }
+
+  disconnectCurrentSocket() {
+    this.socket.disconnect();
+    this.socket = null;
   }
 }

@@ -1,3 +1,30 @@
-<p>
-  quiz-answer works!
-</p>
+<h1>{{"title"}}</h1>
+
+<div *ngIf="!question" class="quiz-answer-start inverse-colors p-3">
+  <div class="row">
+    <div class="col-12">
+      <span>Waiting for quiz to start</span>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="questionAnswered" class="inverse-colors p-3">
+  <div class="row">
+    <div class="col-12">
+      <span>Waiting for next question</span>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="question && !questionAnswered" class="quiz-session-question p-1">
+  <div class="row inverse-colors p-1">
+    <div class="col-12">
+      <h4>{{question.questionText}}</h4>
+    </div>
+  </div>
+  <div *ngFor="let option of question.options" class="quiz-session-option row inverse-colors mt-2 p-1" (click)="answerQuestion($event, option.id)">
+    <div class="col-12">
+      {{option.text}}
+    </div>
+  </div>
+</div>
