@@ -44,14 +44,16 @@ io.on('connection', socket => {
     console.log(hosts);
   });
 
-  socket.on('join-quiz', (quizSessionId) => {
-    console.log(`User ${socket.id} joined to quiz: ${quizSessionId}`);
+  socket.on('join-quiz', ({quizSessionId, nickname}) => {
+    console.log(`User ${socket.id}:${nickname} joined to quiz: ${quizSessionId}`);
     socket.join(quizSessionId);
     socket.quizSessionId = quizSessionId;
+    socket.nickname = nickname;
     console.log('joined clients so far: ', socket.adapter.rooms[quizSessionId]);
     if (hosts[quizSessionId]) {
       io.to(hosts[quizSessionId]['host']).emit('user-joined', {
         quizSessionId: quizSessionId,
+        nickname: nickname,
         clients: socket.adapter.rooms[quizSessionId] || []
       });
     }

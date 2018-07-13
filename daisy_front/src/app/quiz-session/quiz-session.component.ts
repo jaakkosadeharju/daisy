@@ -39,8 +39,8 @@ export class QuizSessionComponent implements OnInit {
       this.userCount--;
     });
 
-    this.answeredQuestionConnection = this.quizService.getAnswerQuestion().subscribe(({optionId, socketId}) => {
-      console.log(`${socketId} answered ${optionId}`);
+    this.answeredQuestionConnection = this.quizService.getAnswerQuestion().subscribe((data) => {
+      console.log(`${data['socketId']} answered ${data['optionId']}`);
     })
 
     this.quizService.emitRegisterQuiz(quizSessionId, quizId);

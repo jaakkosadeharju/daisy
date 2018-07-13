@@ -79,8 +79,9 @@ export class QuizService {
     this.socket.emit('change-question', session.id, question);
   }
 
-  emitJoinQuiz(quizSessionId): void {
-    this.socket.emit('join-quiz', quizSessionId);
+  emitJoinQuiz(quizSessionId: string, nickname: string): void {
+    console.log('nick:', nickname)
+    this.socket.emit('join-quiz', {quizSessionId, nickname});
   }
 
   emitRegisterQuiz(quizSessionId, quizId): void {
